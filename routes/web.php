@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\homeController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,7 @@ Route::post('/login', [loginController::class, 'create'])->name('post.login');
 Route::get('/create', function(){
 	return 'Đây là trang tạo bài viết :v';
 });
+
+Route::get('/views', [PostController::class, 'index']);
+
+Route::post('/views', [PostController::class, 'create'])->name('post.views');
