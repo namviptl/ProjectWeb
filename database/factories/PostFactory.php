@@ -25,7 +25,7 @@ class PostFactory extends Factory
         return [
             'slug' => $this->faker->slug,
             'title' => $this->faker->title,
-            'content' => $this->faker->content,
+            // 'content' => $this->faker->paragrap,
         ];
     }
 }

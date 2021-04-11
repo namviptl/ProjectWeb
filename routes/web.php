@@ -17,7 +17,6 @@ use App\Http\Controllers\PostController;
 */
 
 
-Route::get('/', [homeController::class, 'index'])->middleware('checkRole');
 
 Route::get('/login', [loginController::class, 'index'])->middleware('checkUser');
 
@@ -30,3 +29,14 @@ Route::get('/create', function(){
 Route::get('/views', [PostController::class, 'index']);
 
 Route::post('/views', [PostController::class, 'create'])->name('post.views');
+
+//Bài tập buổi 5
+Route::get('/', [homeController::class, 'index'])->middleware('checkRole');
+
+Route::get('/home', function(){
+	return view('home');
+});
+Route::get('/home2', function(){
+	return view('home2', ['name' => 'nam']);
+});
+//end

@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Models\Post;
 
 class PostSeeder extends Seeder
 {
@@ -17,11 +18,12 @@ class PostSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('posts')->insert([
-            'slug' => Str::random(10),
-            'title' => Str::random(50),
-            'content' => Str::random(200),
+        // DB::table('posts')->insert([
+        //     'slug' => Str::random(10),
+        //     'title' => Str::random(50),
+        //     'content' => Str::random(200),
             
-        ]);
+        // ]);
+        Post::factory()->count(100)->create();
     }
 }
