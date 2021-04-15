@@ -19,44 +19,13 @@
 	<body>
 
 		<div class="container-fluid">
-			<div class="row">
-				<div class="col-6">	
-					@foreach ($post as $value) 
-					<h5>Bài viết thứ: <span>{{$value->id}}</span></h5>
-					<h5>Slug: {{$value->slug}}</span></h5>
-					<h5>Title: <span>{{$value->title}}</span></h5>
-					<h5>Content: <span>{{$value->content}}</span></h5>
-					<a style="font-size: 20px;" onclick="return confirm('Bạn muốn xóa bài viết này chứ?')" href="/ProjectWeb/public/delete?id={{$value->id}}">Xóa bài viết</a>
-					----- <a href="/ProjectWeb/public/edit?id={{$value->id}}" target="_blank" style="font-size: 20px;">Sửa bài viết</a>
-					@endforeach
-				</div>
 				<div class="col-6">
-					<h3>Thêm mới</h3>
-					<form class="form-inline" action="{{route('post.views')}}" method="POST">
-						@csrf
-						<div class="form-group">
-							<label for="title">Slug</label>
-							<input type="text" class="form-control" name="slug">
-						</div>
-						<div class="form-group">
-							<label for="title">Title</label>
-							<input type="text" class="form-control" name="title">
-						</div>
-						<div class="form-group">
-							<label for="title">Content</label>
-							<input type="text" class="form-control" name="content">
-						</div>
-						<button type="submit" class="btn btn-primary">Thêm</button>
-					</form>
-				</div>
-				
-				{{-- <div class="col-6">
 					<h3>Sửa</h3>
-					<form class="form-inline" action="{{route('post.views')}}" method="POST">
+					<form class="form-inline" action="{{route('post.edit')}}" method="POST">
 						@csrf
 						<div class="form-group">
 							<label for="title">Sửa bài viết thứ?</label>
-							<input type="text" class="form-control" name="id">
+							<input type="text" class="form-control" name="id" value="{{$_GET['id']}}" readonly="">
 						</div>
 						<div class="form-group">
 							<label for="title">Slug</label>
@@ -71,8 +40,9 @@
 							<input type="text" class="form-control" name="content">
 						</div>
 						<button type="submit" class="btn btn-primary">Sửa</button>
+						
 					</form>
-				</div> --}}
+				</div>
 			</div>
 		</div>
 	
