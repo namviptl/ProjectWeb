@@ -20,39 +20,44 @@ use App\Models\Post;
 
 
 
-Route::get('/login', [loginController::class, 'index'])->middleware('checkUser');
+// Route::get('/login', [loginController::class, 'index'])->middleware('checkUser');
 
-Route::post('/login', [loginController::class, 'create'])->name('post.login');
+// Route::post('/login', [loginController::class, 'create'])->name('post.login');
 
-Route::get('/create', function(){
-	return 'Đây là trang tạo bài viết :v';
-});
+// Route::get('/create', function(){
+// 	return 'Đây là trang tạo bài viết :v';
+// });
 //Bài tập buổi 6
-Route::get('/views', [PostController::class, 'index']);
+// Route::get('/views', [PostController::class, 'index']);
 
-Route::post('/views', [PostController::class, 'create'])->name('post.views');
+// Route::post('/views', [PostController::class, 'create'])->name('post.views');
 
-Route::get('/edit', [EditController::class, 'index']);
+// Route::get('/edit', [EditController::class, 'index']);
 
-Route::post('/edit', [EditController::class, 'update'])->name('post.edit');
+// Route::post('/edit', [EditController::class, 'update'])->name('post.edit');
 
-Route::get('/delete', function(Request $request){
-	$id = $request->input('id');
-	$post = Post::query()->find($id);
-	if ($post->delete()) {
-		echo "Xóa thành công";
-	}
-});
+// Route::get('/delete', function(Request $request){
+// 	$id = $request->input('id');
+// 	$post = Post::query()->find($id);
+// 	if ($post->delete()) {
+// 		echo "Xóa thành công";
+// 		return redirect('/views');
+// 	}
+// });
 //end
 
 
 //Bài tập buổi 5
-Route::get('/', [homeController::class, 'index'])->middleware('checkRole');
+// Route::get('/', [homeController::class, 'index'])->middleware('checkRole');
 
-Route::get('/home', function(){
-	return view('home');
-});
-Route::get('/home2', function(){
-	return view('home2', ['name' => 'nam']);
-});
+// Route::get('/home', function(){
+// 	return view('home');
+// });
+// Route::get('/home2', function(){
+// 	return view('home2', ['name' => 'nam']);
+// });
 //end
+
+
+//Bài tập buổi 7
+Route::resource('posts', PostController::class);

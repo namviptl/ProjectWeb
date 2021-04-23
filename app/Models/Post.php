@@ -19,21 +19,7 @@ class Post extends Model
         'content',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-
-    ];
+    public function categories(){
+        return $this->belongsToMany(Category::class);
+    }
 }

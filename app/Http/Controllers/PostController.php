@@ -2,44 +2,115 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\Post;
+use App\Models\Category;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    //
-    public function index(){
-    	//$post = DB::table('posts')->get();
-		//return view('view_news',compact($post,'post'));
-
-        $post = Post::all();
-        return view('view_news',compact($post,'post'));
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+        //$posts = Post::query()->get();
+        $posts = Post::with('categories')->get();
+        //dd($posts->toArray());
+        return view('posts.index', compact('posts'));
     }
 
-    public function create(Request $request){
-    	// $title = $request->input('title');
-    	// $search = DB::table('posts')->where('title', 'like', $title)->get();
-    	// $my_array = json_decode($search, true);
-    	// return "Bài viết cần tìm là <br>STT: ".$my_array[0]['id']."<br>Slug: ".$my_array[0]['slug']."<br>Title: ".$my_array[0]['title'].'<br>Content: '.$my_array[0]['content'];
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+        $cates = Category::query()->get();
+        return view('posts.add', compact('cates'));
+    }
 
-    	//dd($search);
-        $slug = $request->input('slug');
-        $title = $request->input('title');
-        $content = $request->input('content');
-
-        $post = new Post([
-            'slug' => $slug,
-            'title' => $title,
-            'content' => $content,
-        ]);
-
-        if ($post->save()) {
-           echo "Thêm mới thành công";
-        }else{
-            echo "Thêm thất bại";
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+        $data = Post::query()->create($request->only('slug', 'title', 'content'));
+        $post_id = $data->id;
+        $post = Post::with('categories')->findOrFail($post_id);
+        $cate_id = $request->only('category');
+        foreach ($cate_id['category'] as $id) {
+            $post->categories()->attach($id);
         }
+        return redirect()->route('posts.index');
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+        $post = Post::with('categories')->findOrFail($id);
+        $cates = Category::query()->get();
+
+        return view('posts.edit', compact('post','cates'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+        $post = Post::with('categories')->findOrFail($id);
+        $post->update($request->only('slug','title', 'content'));
+
+        foreach ($post->categories as $cate) {
+            $cate_id = $request->only('category_'.$cate['id']);
+            $post->categories()->detach($cate['id']);
+            $post->categories()->attach($cate_id['category_'.$cate['id']]);
+        }            
+        return redirect()->route('posts.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+        dd($id);
+        Post::destroy($id);
+        return redirect()->route('posts.index');
+    }
 }

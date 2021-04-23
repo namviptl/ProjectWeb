@@ -23,7 +23,7 @@
   <body>
   
   <div class="site-wrap">
-    @include('layouts/header')
+    @include('layouts.header')
     <div class="site-blocks-cover" style="background-image: url(images/hero_1.jpg);" data-aos="fade">
       <div class="container">
         <div class="row align-items-start align-items-md-center justify-content-end">
@@ -211,7 +211,7 @@
       </div>
     </div>
     
-    @include('layouts/footer')
+    @include('layouts.footer')
   </div>
 
   <script src="{{ URL::asset('js/jquery-3.3.1.min.js') }}"></script>
