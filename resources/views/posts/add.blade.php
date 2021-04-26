@@ -13,7 +13,6 @@
                     <div class="form-group has-error">
                         <label for="slug">Slug <span class="require">*</span> <small>(This field use in url path.)</small></label>
                         <input type="text" class="form-control" name="slug">
-                        <span class="help-block">Field not entered!</span>
                     </div>
 
                     <select name="category[]" class="custom-select" multiple>
@@ -25,11 +24,17 @@
                     <div class="form-group">
                         <label for="title">Title <span class="require">*</span></label>
                         <input type="text" class="form-control" name="title">
+                        @error('title')<div class="alert alert-danger" role="alert">
+                            {{$message}}
+                        </div>@enderror
                     </div>
 
                     <div class="form-group">
                         <label for="description">Content</label>
                         <textarea rows="5" class="form-control" name="content"></textarea>
+                        @error('content')<div class="alert alert-danger" role="alert">
+                            {{$message}}
+                        </div>@enderror
                     </div>
 
                     <div class="form-group">

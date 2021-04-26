@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Category;
+use App\Http\Requests\StorePost;
+use App\Http\Requests\UpdatePost;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -40,7 +42,7 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePost $request)
     {
         //
         $data = Post::query()->create($request->only('slug', 'title', 'content'));
@@ -86,7 +88,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePost $request, $id)
     {
         //
         $post = Post::with('categories')->findOrFail($id);
