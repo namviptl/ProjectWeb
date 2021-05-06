@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+{{$user->email}}
+<a href="{{ route('logout') }}">logout</a>
+{{-- <!DOCTYPE html>
 <html lang="en">
   <head>
     <title>NTN Store</title>
@@ -225,4 +227,4 @@
   <script src="{{ URL::asset('js/main.js') }}"></script>
     
   </body>
-</html>
+</html> --}}

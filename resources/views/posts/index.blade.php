@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+id: {{$user->name}}<br>
+role: @if ($user->role == 1)
+	{{'admin'}}
+	@else {{'user'}}
+@endif<br>
+<a href="{{ route('logout') }}">logout</a>
 <div class="dropdown">
 
 		<h1 class="text-center">Danh sách bài viết</h1><br>

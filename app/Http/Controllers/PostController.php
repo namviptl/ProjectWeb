@@ -7,6 +7,8 @@ use App\Models\Category;
 use App\Http\Requests\StorePost;
 use App\Http\Requests\UpdatePost;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -19,9 +21,10 @@ class PostController extends Controller
     {
         //
         //$posts = Post::query()->get();
+        $user = Auth::user();
         $posts = Post::with('categories')->get();
         //dd($posts->toArray());
-        return view('posts.index', compact('posts'));
+        return view('posts.index', compact('posts', 'user'));
     }
 
     /**
@@ -32,6 +35,7 @@ class PostController extends Controller
     public function create()
     {
         //
+        Gate::authorize('create-post');
         $cates = Category::query()->get();
         return view('posts.add', compact('cates'));
     }
@@ -91,6 +95,7 @@ class PostController extends Controller
     public function update(UpdatePost $request, $id)
     {
         //
+      
         $post = Post::with('categories')->findOrFail($id);
         $post->update($request->only('slug','title', 'content'));
 

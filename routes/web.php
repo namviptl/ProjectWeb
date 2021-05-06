@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\EditController;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,9 +21,13 @@ use App\Models\Post;
 
 
 
-// Route::get('/login', [loginController::class, 'index'])->middleware('checkUser');
+Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
 
-// Route::post('/login', [loginController::class, 'create'])->name('post.login');
+
+Route::post('/login', [LoginController::class, 'show'])->middleware('guest')->name('login');
+
+// Route::get('/home', [homeController::class, 'index'])->middleware('auth')->name('home');
+Route::get('logout', [homeController::class, 'logout'])->middleware('auth')->name('logout');
 
 // Route::get('/create', function(){
 // 	return 'Đây là trang tạo bài viết :v';
@@ -60,4 +65,4 @@ use App\Models\Post;
 
 
 //Bài tập buổi 7
-Route::resource('posts', PostController::class);
+Route::resource('posts', PostController::class)->middleware('auth');

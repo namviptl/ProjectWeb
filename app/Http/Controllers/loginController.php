@@ -3,28 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class loginController extends Controller
+
+class LoginController extends Controller
 {
+    //
     public function index(){
-
-        return view('login');
-    	
+    	return view('login');
     }
 
-   public function create(Request $request){
-    	//dd($request->all());
+    public function show(Request $request){
+    	$credentials = $request->only('email','password');
 
-    	// $user = $request->input('user');
-    	// $passw = $request->input('passw');
+    	if (Auth::attempt($credentials, $request->has('remember'))){
+    		$request->session()->regenerate();
 
+    		return redirect()->intended('posts');
+    	}
 
-    	// if($user && $passw ){
-     //        session(['user' => $user]);
-    	// 	return redirect('/');
-    	// }else{
-    	// 	return 'Bạn chưa điền đủ tt đăng nhập';
-    	// }
+    	return back()->withErrors([
+    		'error' => 'Thất bại',
+    	]);
     }
-
 }
